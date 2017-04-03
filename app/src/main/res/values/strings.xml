@@ -6,8 +6,10 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <!-- Navigation menu -->
     <string name="title_translate">Translate</string>
     <string name="title_history">History</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_settings">Settings</string>
+    <string name="fragment_translate_edit_text_title_phrase">Input translate phrase here</string>
 </resources>
