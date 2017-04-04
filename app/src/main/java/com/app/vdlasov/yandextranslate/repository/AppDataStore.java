@@ -11,5 +11,6 @@ import rx.Observable;
  */
 
 public interface AppDataStore {
+
     Observable<List<TranslatePhrase>> getTranslatePhrases();
 }

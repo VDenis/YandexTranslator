@@ -1,4 +1,4 @@
-package com.app.vdlasov.yandextranslate.ui.adapter.history;
+package com.app.vdlasov.yandextranslate.ui.adapter;
 
 import com.app.vdlasov.yandextranslate.R;
 import com.app.vdlasov.yandextranslate.model.HistoryUiItem;
@@ -23,8 +23,11 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> implements Filterable {
 
     private List<HistoryUiItem> dataset;
+
     private List<HistoryUiItem> filteredDataset = new ArrayList<>();
+
     private CustomFilter filter = new CustomFilter(this);
+
     private String filterString = "";
 
     private OnItemClickListener clickListener;
@@ -74,10 +77,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     private class CustomFilter extends Filter {
 
         private HistoryAdapter mAdapter;
+
         private CustomFilter(HistoryAdapter mAdapter) {
             super();
             this.mAdapter = mAdapter;
         }
+
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             filteredDataset.clear();
@@ -94,6 +99,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             results.count = filteredDataset.size();
             return results;
         }
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             this.mAdapter.notifyDataSetChanged();
@@ -103,7 +109,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView inputText;
+
         public TextView translatedText;
+
         public TextView lang;
 
         public ViewHolder(final View itemView, final OnItemClickListener listener) {

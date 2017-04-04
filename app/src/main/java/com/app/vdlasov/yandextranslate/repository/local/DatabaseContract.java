@@ -12,14 +12,21 @@ import java.util.Date;
  */
 
 public class DatabaseContract {
+
     public static abstract class TranslatePhrase implements BaseColumns {
+
         public static final String TABLE_NAME = "translate_phrase";
 
         public static final String COLUMN_ID = "id";
+
         public static final String COLUMN_PRIMARY_TEXT = "primary_text";
+
         public static final String COLUMN_TRANSLATED_TEXT = "translated_text";
+
         public static final String COLUMN_LANG = "lang";
+
         public static final String COLUMN_DATE = "date";
+
         public static final String COLUMN_FAVORITE = "favorite";
 
         public static String getTranslatePhraseCreateQuery() {

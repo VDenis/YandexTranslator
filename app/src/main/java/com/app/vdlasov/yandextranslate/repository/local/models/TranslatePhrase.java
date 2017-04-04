@@ -38,7 +38,8 @@ public class TranslatePhrase {
     @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhrase.COLUMN_FAVORITE)
     public boolean favorite;
 
-    public TranslatePhrase(@Nullable final Long id, @NonNull final String primary, @NonNull final String translated, @NonNull final String lang, long date, boolean favorite) {
+    public TranslatePhrase(@Nullable final Long id, @NonNull final String primary, @NonNull final String translated,
+            @NonNull final String lang, long date, boolean favorite) {
         this.id = id;
         this.primary = primary;
         this.translated = translated;

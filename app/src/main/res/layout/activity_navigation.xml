@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.app.vdlasov.yandextranslate.ui.activity.navigation.NavigationActivity">
+    tools:context="com.app.vdlasov.yandextranslate.ui.activity.NavigationActivity">
 
     <FrameLayout
         android:id="@+id/content"

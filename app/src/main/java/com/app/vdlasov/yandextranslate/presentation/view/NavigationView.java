@@ -1,4 +1,4 @@
-package com.app.vdlasov.yandextranslate.presentation.view.navigation;
+package com.app.vdlasov.yandextranslate.presentation.view;
 
 import com.arellomobile.mvp.MvpView;
 

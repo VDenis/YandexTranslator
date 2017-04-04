@@ -1,6 +1,5 @@
 package com.app.vdlasov.yandextranslate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,5 +21,6 @@ public class Config {
     public static final long READ_TIMEOUT = 10L;
 
     public static final List<String> Lang_Names = Arrays.asList("English", "Russian", "French");
+
     public static final List<String> Lang_Abbreviation = Arrays.asList("en", "ru", "fr");
 }

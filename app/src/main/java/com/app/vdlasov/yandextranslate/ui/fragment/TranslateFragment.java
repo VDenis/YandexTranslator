@@ -1,9 +1,9 @@
-package com.app.vdlasov.yandextranslate.ui.fragment.translate;
+package com.app.vdlasov.yandextranslate.ui.fragment;
 
 import com.app.vdlasov.yandextranslate.Config;
 import com.app.vdlasov.yandextranslate.R;
-import com.app.vdlasov.yandextranslate.presentation.presenter.translate.TranslatePresenter;
-import com.app.vdlasov.yandextranslate.presentation.view.translate.TranslateView;
+import com.app.vdlasov.yandextranslate.presentation.presenter.TranslatePresenter;
+import com.app.vdlasov.yandextranslate.presentation.view.TranslateView;
 import com.app.vdlasov.yandextranslate.ui.common.MvpFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 

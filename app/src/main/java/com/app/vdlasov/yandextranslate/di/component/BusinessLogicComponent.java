@@ -2,9 +2,9 @@ package com.app.vdlasov.yandextranslate.di.component;
 
 
 import com.app.vdlasov.yandextranslate.di.module.BusinessLogicModule;
-import com.app.vdlasov.yandextranslate.presentation.presenter.history.HistoryPresenter;
-import com.app.vdlasov.yandextranslate.presentation.presenter.translate.TranslatePresenter;
-import com.app.vdlasov.yandextranslate.ui.fragment.about.SettingsFragment;
+import com.app.vdlasov.yandextranslate.presentation.presenter.HistoryPresenter;
+import com.app.vdlasov.yandextranslate.presentation.presenter.TranslatePresenter;
+import com.app.vdlasov.yandextranslate.ui.fragment.SettingsFragment;
 
 import dagger.Subcomponent;
 

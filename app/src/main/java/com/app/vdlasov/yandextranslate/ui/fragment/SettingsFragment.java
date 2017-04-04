@@ -1,4 +1,4 @@
-package com.app.vdlasov.yandextranslate.ui.fragment.about;
+package com.app.vdlasov.yandextranslate.ui.fragment;
 
 import com.app.vdlasov.yandextranslate.R;
 import com.app.vdlasov.yandextranslate.di.DI;

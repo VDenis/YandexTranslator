@@ -1,10 +1,10 @@
-package com.app.vdlasov.yandextranslate.presentation.presenter.translate;
+package com.app.vdlasov.yandextranslate.presentation.presenter;
 
 
 import com.app.vdlasov.yandextranslate.Config;
 import com.app.vdlasov.yandextranslate.di.DI;
 import com.app.vdlasov.yandextranslate.model.YandexTranslateResponse;
-import com.app.vdlasov.yandextranslate.presentation.view.translate.TranslateView;
+import com.app.vdlasov.yandextranslate.presentation.view.TranslateView;
 import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;

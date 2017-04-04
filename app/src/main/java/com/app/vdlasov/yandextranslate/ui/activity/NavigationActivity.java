@@ -1,12 +1,12 @@
-package com.app.vdlasov.yandextranslate.ui.activity.navigation;
+package com.app.vdlasov.yandextranslate.ui.activity;
 
 import com.app.vdlasov.yandextranslate.R;
-import com.app.vdlasov.yandextranslate.presentation.presenter.navigation.NavigationPresenter;
-import com.app.vdlasov.yandextranslate.presentation.view.navigation.NavigationView;
+import com.app.vdlasov.yandextranslate.presentation.presenter.NavigationPresenter;
+import com.app.vdlasov.yandextranslate.presentation.view.NavigationView;
 import com.app.vdlasov.yandextranslate.ui.common.MvpActivity;
-import com.app.vdlasov.yandextranslate.ui.fragment.about.SettingsFragment;
-import com.app.vdlasov.yandextranslate.ui.fragment.history.HistoryFragment;
-import com.app.vdlasov.yandextranslate.ui.fragment.translate.TranslateFragment;
+import com.app.vdlasov.yandextranslate.ui.fragment.HistoryFragment;
+import com.app.vdlasov.yandextranslate.ui.fragment.SettingsFragment;
+import com.app.vdlasov.yandextranslate.ui.fragment.TranslateFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import android.content.Context;

@@ -1,10 +1,9 @@
-package com.app.vdlasov.yandextranslate.presentation.presenter.history;
+package com.app.vdlasov.yandextranslate.presentation.presenter;
 
 
 import com.app.vdlasov.yandextranslate.di.DI;
 import com.app.vdlasov.yandextranslate.model.HistoryUiItem;
-import com.app.vdlasov.yandextranslate.model.YandexTranslateResponse;
-import com.app.vdlasov.yandextranslate.presentation.view.history.HistoryView;
+import com.app.vdlasov.yandextranslate.presentation.view.HistoryView;
 import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
 import com.arellomobile.mvp.InjectViewState;

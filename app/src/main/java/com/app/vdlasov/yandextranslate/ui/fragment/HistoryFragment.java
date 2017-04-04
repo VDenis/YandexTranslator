@@ -1,10 +1,10 @@
-package com.app.vdlasov.yandextranslate.ui.fragment.history;
+package com.app.vdlasov.yandextranslate.ui.fragment;
 
 import com.app.vdlasov.yandextranslate.R;
 import com.app.vdlasov.yandextranslate.model.HistoryUiItem;
-import com.app.vdlasov.yandextranslate.presentation.presenter.history.HistoryPresenter;
-import com.app.vdlasov.yandextranslate.presentation.view.history.HistoryView;
-import com.app.vdlasov.yandextranslate.ui.adapter.history.HistoryAdapter;
+import com.app.vdlasov.yandextranslate.presentation.presenter.HistoryPresenter;
+import com.app.vdlasov.yandextranslate.presentation.view.HistoryView;
+import com.app.vdlasov.yandextranslate.ui.adapter.HistoryAdapter;
 import com.app.vdlasov.yandextranslate.ui.common.MvpFragment;
 import com.app.vdlasov.yandextranslate.ui.common.OnItemClickListener;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,11 +85,11 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
                 .textChanges(edtFilter)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<CharSequence>() {
-            @Override
-            public void call(final CharSequence charSequence) {
-                adapter.getFilter().filter(charSequence.toString());
-            }
-        });
+                    @Override
+                    public void call(final CharSequence charSequence) {
+                        adapter.getFilter().filter(charSequence.toString());
+                    }
+                });
 
 //        edtFilter.addTextChangedListener(new TextWatcher() {
 //            @Override

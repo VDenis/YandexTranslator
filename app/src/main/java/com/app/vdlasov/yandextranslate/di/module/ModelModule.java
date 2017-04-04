@@ -4,7 +4,6 @@ import com.app.vdlasov.yandextranslate.BuildConfig;
 import com.app.vdlasov.yandextranslate.Config;
 import com.app.vdlasov.yandextranslate.api.RestApi;
 import com.app.vdlasov.yandextranslate.api.YandexTranslateApi;
-import com.facebook.stetho.Stetho;
 
 import android.content.Context;
 
