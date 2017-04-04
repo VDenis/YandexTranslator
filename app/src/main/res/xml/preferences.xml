@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/history_preferences">
+
+        <Preference
+            android:title="Clear history"
+            android:key="@string/clear_history_button_preference"
+            android:summary="Clear translate history" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

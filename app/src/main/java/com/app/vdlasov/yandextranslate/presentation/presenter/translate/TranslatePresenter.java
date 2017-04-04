@@ -1,6 +1,7 @@
 package com.app.vdlasov.yandextranslate.presentation.presenter.translate;
 
 
+import com.app.vdlasov.yandextranslate.Config;
 import com.app.vdlasov.yandextranslate.di.DI;
 import com.app.vdlasov.yandextranslate.model.YandexTranslateResponse;
 import com.app.vdlasov.yandextranslate.presentation.view.translate.TranslateView;
@@ -25,8 +26,10 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
         DI.getDI().getComponentManager().getBusinessLogicComponent().inject(this);
     }
 
-    public void requestTranslatePhrase(String inputPhrase) {
-        translateManager.translate("en-ru", inputPhrase)
+    public void requestTranslatePhrase(String langFrom, String langTo, String text) {
+        String abbreviationLangFrom = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langFrom));
+        String abbreviationLangTo = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langTo));
+        translateManager.translate(abbreviationLangFrom + "-" + abbreviationLangTo, text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<YandexTranslateResponse>() {
@@ -45,6 +48,6 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
                         }
                     }
                 });
-        //getViewState().showTranslatedPhrase(inputPhrase.concat(" translated"));
+        //getViewState().showTranslatedPhrase(text.concat(" translated"));
     }
 }

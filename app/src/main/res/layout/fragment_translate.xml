@@ -1,22 +1,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.app.vdlasov.yandextranslate.ui.fragment.translate.TranslateFragment">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark">
+
+        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/fragment_translate_button_lang_from"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:textAllCaps="false"
+                    tools:text="English" />
+
+                <ImageButton
+                    android:id="@+id/fragment_translate_button_lang_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_code_tags_24px" />
+
+                <Button
+                    android:id="@+id/fragment_translate_button_lang_to"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:textAllCaps="false"
+                    tools:text="Russian" />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
     <EditText
         android:id="@+id/fragment_translate_edit_text_phrase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/edit_text_background"
         android:gravity="top"
         android:hint="@string/fragment_translate_edit_text_title_phrase"
+        android:imeOptions="actionDone"
+        android:inputType="textMultiLine"
         android:maxLines="4"
         android:minHeight="100dp"
-        android:minLines="4" />
+        android:minLines="4"
+        android:paddingBottom="48dp"
+        android:paddingEnd="48dp"
+        android:textSize="18sp" />
 
     <ImageButton
         android:id="@+id/fragment_translate_image_button_translate"
@@ -24,7 +80,20 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/fragment_translate_edit_text_phrase"
         android:layout_alignEnd="@+id/fragment_translate_edit_text_phrase"
-        android:src="@drawable/ic_send_black_24px" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_translate_black_24px" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fragment_translate_edit_text_phrase"
+        android:layout_alignStart="@+id/fragment_translate_edit_text_phrase"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_close_black_24px" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,6 +108,7 @@
             android:id="@+id/fragment_translate_text_view_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
             tools:text="test test test test test test test test test test test test test test test test test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test testtest test tes" />
     </ScrollView>
 </RelativeLayout>

@@ -4,6 +4,8 @@ import com.app.vdlasov.yandextranslate.R;
 import com.app.vdlasov.yandextranslate.presentation.presenter.navigation.NavigationPresenter;
 import com.app.vdlasov.yandextranslate.presentation.view.navigation.NavigationView;
 import com.app.vdlasov.yandextranslate.ui.common.MvpActivity;
+import com.app.vdlasov.yandextranslate.ui.fragment.about.SettingsFragment;
+import com.app.vdlasov.yandextranslate.ui.fragment.history.HistoryFragment;
 import com.app.vdlasov.yandextranslate.ui.fragment.translate.TranslateFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
@@ -23,6 +25,8 @@ public class NavigationActivity extends MvpActivity implements NavigationView,
 
     private final static int MENU_DIALOGS = 0;
 
+    private BottomNavigationView bottomNavigationView;
+
     @InjectPresenter
     NavigationPresenter mNavigationPresenter;
 
@@ -40,28 +44,43 @@ public class NavigationActivity extends MvpActivity implements NavigationView,
                 break;
             }
             case R.id.navigation_history: {
+                addFragment(HistoryFragment.newInstance());
                 break;
             }
             case R.id.navigation_settings: {
+                addFragment(SettingsFragment.newInstance());
                 break;
             }
         }
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.navigation_translate);
+        if (fragment == null) {
+            setTranslateView();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            bottomNavigationView.getMenu().getItem(MENU_DIALOGS).setChecked(true);
-            onNavigationItemSelected(bottomNavigationView.getMenu().getItem(MENU_DIALOGS));
+            setTranslateView();
         }
+    }
+
+    private void setTranslateView() {
+        bottomNavigationView.getMenu().getItem(MENU_DIALOGS).setChecked(true);
+        onNavigationItemSelected(bottomNavigationView.getMenu().getItem(MENU_DIALOGS));
     }
 
     private void addFragment(Fragment fragment) {
