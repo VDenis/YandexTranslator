@@ -4,10 +4,8 @@ import com.app.vdlasov.yandextranslate.R;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 /**
@@ -27,7 +25,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
 
-        Preference button = findPreference(getString(R.string.clear_history_button_preference));
+        Preference button = findPreference(getString(R.string.preference_key_clear_history_button));
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(final Preference preference) {

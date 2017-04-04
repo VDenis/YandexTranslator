@@ -14,8 +14,11 @@
     <string name="fragment_translate_edit_text_title_phrase">Input translate phrase here</string>
 
     <!-- Settings -->
-    <string name="history_preferences">History settings</string>
-    <string name="clear_history_button_preference">CLEAR_HISTORY_BUTTON_PREFERENCE</string>
+    <string name="preference_title_history">History settings</string>
+    <string name="preference_key_clear_history_button">CLEAR_HISTORY_BUTTON_PREFERENCE</string>
+
+    <string name="preference_title_about">About</string>
+    <string name="preference_text_about">Yandex translate application. Author: Denis Vlasov.</string>
 
     <string-array name="languages_name_to_abbreviation">
         <item name="Russian">ru</item>
