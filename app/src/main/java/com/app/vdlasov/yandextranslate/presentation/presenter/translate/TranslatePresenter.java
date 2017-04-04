@@ -5,7 +5,7 @@ import com.app.vdlasov.yandextranslate.Config;
 import com.app.vdlasov.yandextranslate.di.DI;
 import com.app.vdlasov.yandextranslate.model.YandexTranslateResponse;
 import com.app.vdlasov.yandextranslate.presentation.view.translate.TranslateView;
-import com.app.vdlasov.yandextranslate.repository.TranslateManager;
+import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
@@ -20,7 +20,7 @@ import rx.schedulers.Schedulers;
 public class TranslatePresenter extends MvpPresenter<TranslateView> {
 
     @Inject
-    TranslateManager translateManager;
+    TranslateRepository translateManager;
 
     public TranslatePresenter() {
         DI.getDI().getComponentManager().getBusinessLogicComponent().inject(this);

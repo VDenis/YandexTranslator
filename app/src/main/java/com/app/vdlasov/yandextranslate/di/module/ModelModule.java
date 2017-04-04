@@ -4,6 +4,7 @@ import com.app.vdlasov.yandextranslate.BuildConfig;
 import com.app.vdlasov.yandextranslate.Config;
 import com.app.vdlasov.yandextranslate.api.RestApi;
 import com.app.vdlasov.yandextranslate.api.YandexTranslateApi;
+import com.facebook.stetho.Stetho;
 
 import android.content.Context;
 
@@ -78,5 +79,11 @@ public class ModelModule {
             builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         }
         return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    Context provideContext() {
+        return mContext;
     }
 }

@@ -1,6 +1,7 @@
 package com.app.vdlasov.yandextranslate;
 
 import com.app.vdlasov.yandextranslate.di.DI;
+import com.facebook.stetho.Stetho;
 
 import android.app.Application;
 
@@ -14,5 +15,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         DI.getDI().init(this);
+
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
     }
 }

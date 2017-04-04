@@ -1,7 +1,10 @@
 package com.app.vdlasov.yandextranslate.di.module;
 
 import com.app.vdlasov.yandextranslate.api.RestApi;
-import com.app.vdlasov.yandextranslate.repository.TranslateManager;
+import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
+import com.app.vdlasov.yandextranslate.repository.local.AppLocalDataStore;
+
+import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,7 +16,12 @@ import dagger.Provides;
 public class BusinessLogicModule {
 
     @Provides
-    public TranslateManager provideTranslateManager(RestApi api) {
-        return new TranslateManager(api);
+    public TranslateRepository provideTranslateManager(RestApi api, AppLocalDataStore localDataStore) {
+        return new TranslateRepository(api, localDataStore);
+    }
+
+    @Provides
+    public AppLocalDataStore provideAppLocalDataStore(Context context) {
+        return new AppLocalDataStore(context);
     }
 }

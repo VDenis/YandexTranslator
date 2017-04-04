@@ -51,4 +51,13 @@ dependencies {
     // okhttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+
+    // storio
+    compile 'com.pushtorefresh.storio:sqlite:1.12.3'
+    compile 'com.pushtorefresh.storio:sqlite-annotations:1.12.3'
+    apt 'com.pushtorefresh.storio:sqlite-annotations-processor:1.12.3'
+
+    // stetho
+    compile 'com.facebook.stetho:stetho:1.4.2'
+    compile 'com.facebook.stetho:stetho-urlconnection:1.4.2'
 }

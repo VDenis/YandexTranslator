@@ -27,7 +27,7 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
 
     private RecyclerView recyclerView;
 
-    private RecyclerView.Adapter adapter;
+    private HistoryAdapter adapter;
 
     @InjectPresenter
     HistoryPresenter mHistoryPresenter;
@@ -50,6 +50,11 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
         return view;
     }
 
+    @Override
+    public void showTranslateHistory(final List<HistoryUiItem> history) {
+        adapter.add(history);
+    }
+
     private void initRecyclerView(final View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment_history_recycler_history);
         recyclerView.setHasFixedSize(true);
@@ -66,14 +71,16 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
+
+        mHistoryPresenter.getTranslateHistory();
     }
 
     private List<HistoryUiItem> createDataset() {
         List<HistoryUiItem> array = new ArrayList<HistoryUiItem>();
-        array.add(new HistoryUiItem("Apple", "Яблоко", "en-ru"));
-        array.add(new HistoryUiItem("Яблоко", "Apple", "ru-en"));
-        array.add(new HistoryUiItem("Tree", "Дерево", "en-ru"));
-        array.add(new HistoryUiItem("Дерево", "Tree", "ru-en"));
+//        array.add(new HistoryUiItem("Apple", "Яблоко", "en-ru"));
+//        array.add(new HistoryUiItem("Яблоко", "Apple", "ru-en"));
+//        array.add(new HistoryUiItem("Tree", "Дерево", "en-ru"));
+//        array.add(new HistoryUiItem("Дерево", "Tree", "ru-en"));
         return array;
     }
 

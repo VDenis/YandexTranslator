@@ -28,6 +28,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         this.clickListener = clickListener;
     }
 
+    public void add(List<HistoryUiItem> newDataset) {
+        dataset.clear();
+        dataset.addAll(newDataset);
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history, parent, false);

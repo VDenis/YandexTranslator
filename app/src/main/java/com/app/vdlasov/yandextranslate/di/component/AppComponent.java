@@ -2,7 +2,7 @@ package com.app.vdlasov.yandextranslate.di.component;
 
 import com.app.vdlasov.yandextranslate.di.module.BusinessLogicModule;
 import com.app.vdlasov.yandextranslate.di.module.ModelModule;
-import com.app.vdlasov.yandextranslate.repository.TranslateManager;
+import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
 
 import javax.inject.Singleton;
 
@@ -18,5 +18,5 @@ interface AppComponent {
 
     public BusinessLogicComponent plus(BusinessLogicModule businessLogicModule);
 
-    public void inject(TranslateManager entry);
+    public void inject(TranslateRepository entry);
 }
