@@ -11,34 +11,34 @@ import android.support.annotation.Nullable;
  * Created by Denis on 04.04.2017.
  */
 
-@StorIOSQLiteType(table = DatabaseContract.TranslatePhrase.TABLE_NAME)
+@StorIOSQLiteType(table = DatabaseContract.TranslatePhraseTableMeta.TABLE_NAME)
 public class TranslatePhrase {
 
     @Nullable
-    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhrase.COLUMN_ID, key = true)
-    public Long id;
+    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhraseTableMeta.COLUMN_ID, key = true)
+    public Integer id;
 
     @NonNull
-    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhrase.COLUMN_PRIMARY_TEXT)
+    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhraseTableMeta.COLUMN_PRIMARY_TEXT)
     public String primary;
 
     @NonNull
-    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhrase.COLUMN_TRANSLATED_TEXT)
+    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhraseTableMeta.COLUMN_TRANSLATED_TEXT)
     public String translated;
 
     @NonNull
-    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhrase.COLUMN_LANG)
+    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhraseTableMeta.COLUMN_LANG)
     public String lang;
 
     @NonNull
-    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhrase.COLUMN_DATE)
+    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhraseTableMeta.COLUMN_DATE)
     public long date;
 
     @NonNull
-    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhrase.COLUMN_FAVORITE)
+    @StorIOSQLiteColumn(name = DatabaseContract.TranslatePhraseTableMeta.COLUMN_FAVORITE)
     public boolean favorite;
 
-    public TranslatePhrase(@Nullable final Long id, @NonNull final String primary, @NonNull final String translated,
+    public TranslatePhrase(@Nullable final Integer id, @NonNull final String primary, @NonNull final String translated,
             @NonNull final String lang, long date, boolean favorite) {
         this.id = id;
         this.primary = primary;
@@ -52,11 +52,11 @@ public class TranslatePhrase {
 
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -93,7 +93,7 @@ public class TranslatePhrase {
         this.date = date;
     }
 
-    public boolean isFavorite() {
+    public boolean getFavorite() {
         return favorite;
     }
 

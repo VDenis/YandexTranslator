@@ -41,9 +41,11 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
                     @Override
                     public void call(final Throwable throwable) {
                         if (throwable instanceof HttpException) {
+                            // http, internet error
                             HttpException exception = (HttpException) throwable;
                             getViewState().showError(exception.code() + " " + exception.message());
                         } else {
+                            // database, device error
                             getViewState().showError(throwable.getMessage());
                         }
                     }

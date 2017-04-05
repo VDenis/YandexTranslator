@@ -1,9 +1,16 @@
 package com.app.vdlasov.yandextranslate.repository.local;
 
+import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
+import com.pushtorefresh.storio.sqlite.operations.put.DefaultPutResolver;
+import com.pushtorefresh.storio.sqlite.operations.put.PutResolver;
 import com.pushtorefresh.storio.sqlite.queries.DeleteQuery;
+import com.pushtorefresh.storio.sqlite.queries.InsertQuery;
 import com.pushtorefresh.storio.sqlite.queries.Query;
+import com.pushtorefresh.storio.sqlite.queries.UpdateQuery;
 
+import android.content.ContentValues;
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
@@ -13,11 +20,11 @@ import java.util.Date;
 
 public class DatabaseContract {
 
-    public static abstract class TranslatePhrase implements BaseColumns {
+    public static abstract class TranslatePhraseTableMeta implements BaseColumns {
 
         public static final String TABLE_NAME = "translate_phrase";
 
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "_id";
 
         public static final String COLUMN_PRIMARY_TEXT = "primary_text";
 
@@ -44,17 +51,52 @@ public class DatabaseContract {
         }
 
         public static final Query QUERY_ALL = Query.builder()
-                .table(TranslatePhrase.TABLE_NAME)
+                .table(TranslatePhraseTableMeta.TABLE_NAME)
                 .build();
 
         public static final Query QUERY_ALL_SORTED = Query.builder()
-                .table(TranslatePhrase.TABLE_NAME)
+                .table(TranslatePhraseTableMeta.TABLE_NAME)
                 .orderBy(COLUMN_DATE + " DESC")
                 .build();
 
         public static final DeleteQuery DELETE_ALL = DeleteQuery.builder()
-                .table(TranslatePhrase.TABLE_NAME)
+                .table(TranslatePhraseTableMeta.TABLE_NAME)
                 .build();
+
+        public static final PutResolver<TranslatePhrase> PUT_RESOLVER = new DefaultPutResolver<TranslatePhrase>() {
+            @NonNull
+            @Override
+            protected InsertQuery mapToInsertQuery(@NonNull final TranslatePhrase object) {
+                return InsertQuery.builder()
+                        .table(TranslatePhraseTableMeta.TABLE_NAME)
+                        .build();
+            }
+
+            @NonNull
+            @Override
+            protected UpdateQuery mapToUpdateQuery(@NonNull final TranslatePhrase object) {
+                return UpdateQuery.builder()
+                        .table(TranslatePhraseTableMeta.TABLE_NAME)
+                        .where(TranslatePhraseTableMeta.COLUMN_PRIMARY_TEXT + " = ?")
+                        .whereArgs(object.getPrimary())
+                        .build();
+            }
+
+            @NonNull
+            @Override
+            protected ContentValues mapToContentValues(@NonNull final TranslatePhrase object) {
+                ContentValues contentValues = new ContentValues(6);
+
+                contentValues.put(TranslatePhraseTableMeta.COLUMN_DATE, object.date);
+                //contentValues.put(TranslatePhraseTableMeta.COLUMN_ID, object.id);
+                contentValues.put(TranslatePhraseTableMeta.COLUMN_FAVORITE, object.favorite);
+                contentValues.put(TranslatePhraseTableMeta.COLUMN_TRANSLATED_TEXT, object.translated);
+                contentValues.put(TranslatePhraseTableMeta.COLUMN_PRIMARY_TEXT, object.primary);
+                contentValues.put(TranslatePhraseTableMeta.COLUMN_LANG, object.lang);
+
+                return contentValues;
+            }
+        };
 
         public static Long persistDate(Date date) {
             if (date != null) {

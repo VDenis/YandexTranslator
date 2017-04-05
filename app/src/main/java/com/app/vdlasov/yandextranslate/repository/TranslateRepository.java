@@ -35,7 +35,7 @@ public class TranslateRepository {
                     public void call(final YandexTranslateResponse yandexTranslateResponse) {
                         mAppLocalDataStore.saveTranslatePhraseToDatabase(
                                 new TranslatePhrase(null, text, yandexTranslateResponse.text.get(0), lang,
-                                        DatabaseContract.TranslatePhrase.persistDate(new Date()), false));
+                                        DatabaseContract.TranslatePhraseTableMeta.persistDate(new Date()), false));
                     }
                 });
     }
@@ -45,6 +45,6 @@ public class TranslateRepository {
     }
 
     public void clearTranslateHistory() {
-        mAppLocalDataStore.delereTranslatePhrasesFromDatabase();
+        mAppLocalDataStore.deleteTranslatePhrasesFromDatabase();
     }
 }

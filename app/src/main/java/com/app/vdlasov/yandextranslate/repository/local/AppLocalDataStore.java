@@ -3,6 +3,7 @@ package com.app.vdlasov.yandextranslate.repository.local;
 import com.app.vdlasov.yandextranslate.repository.AppDataStore;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhraseSQLiteTypeMapping;
+import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhraseStorIOSQLitePutResolver;
 import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite;
 
@@ -36,30 +37,44 @@ public class AppLocalDataStore implements AppDataStore {
 
         return mStorIOSQLite.get()
                 .listOfObjects(TranslatePhrase.class)
-                .withQuery(DatabaseContract.TranslatePhrase.QUERY_ALL_SORTED)
+                .withQuery(DatabaseContract.TranslatePhraseTableMeta.QUERY_ALL_SORTED)
                 .prepare()
                 .asRxObservable();
     }
 
     public void saveTranslatePhrasesToDatabase(List<TranslatePhrase> history) {
-        mStorIOSQLite.put().objects(history).prepare().executeAsBlocking();
+        mStorIOSQLite.put()
+                .objects(history)
+                .withPutResolver(DatabaseContract.TranslatePhraseTableMeta.PUT_RESOLVER)
+                .prepare()
+                .executeAsBlocking();
     }
 
     public void saveTranslatePhraseToDatabase(TranslatePhrase phrase) {
-        mStorIOSQLite.put().object(phrase).prepare().executeAsBlocking();
+        mStorIOSQLite.put()
+                .object(phrase)
+                .withPutResolver(DatabaseContract.TranslatePhraseTableMeta.PUT_RESOLVER)
+                .prepare()
+                .executeAsBlocking();
     }
 
-    public void delereTranslatePhraseFromDatabase(TranslatePhrase phrase) {
-        mStorIOSQLite.delete().object(phrase).prepare().executeAsBlocking();
-    }
-
-    public void delereTranslatePhrasesFromDatabase(List<TranslatePhrase> history) {
-        mStorIOSQLite.delete().objects(history).prepare().executeAsBlocking();
-    }
-
-    public void delereTranslatePhrasesFromDatabase() {
+    public void deleteTranslatePhraseFromDatabase(TranslatePhrase phrase) {
         mStorIOSQLite.delete()
-                .byQuery(DatabaseContract.TranslatePhrase.DELETE_ALL)
+                .object(phrase)
+                .prepare()
+                .executeAsBlocking();
+    }
+
+    public void deleteTranslatePhrasesFromDatabase(List<TranslatePhrase> history) {
+        mStorIOSQLite.delete()
+                .objects(history)
+                .prepare()
+                .executeAsBlocking();
+    }
+
+    public void deleteTranslatePhrasesFromDatabase() {
+        mStorIOSQLite.delete()
+                .byQuery(DatabaseContract.TranslatePhraseTableMeta.DELETE_ALL)
                 .prepare()
                 .executeAsBlocking();
     }
