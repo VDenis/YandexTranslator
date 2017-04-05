@@ -46,6 +46,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         getFilter().filter(filterString);
         //notifyDataSetChanged();
     }
+
+    public void remove(int position) {
+        dataset.remove(position);
+        getFilter().filter(filterString);
+    }
+
     public HistoryUiItem getItem(int position) {
         return filteredDataset.get(position);
     }

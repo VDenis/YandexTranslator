@@ -8,6 +8,7 @@ import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,23 @@ public class HistoryPresenter extends MvpPresenter<HistoryView> {
                                     phrase.getLang()));
                         }
                         getViewState().showTranslateHistory(list);
+                    }
+                });
+    }
+
+    public void deleteTranslatePhrasesFromDatabase(int id) {
+        translateManager.deleteTranslatePhrasesFromDatabase(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<DeleteResult>() {
+                    @Override
+                    public void call(final DeleteResult deleteResult) {
+
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(final Throwable throwable) {
+                        getTranslateHistory();
                     }
                 });
     }

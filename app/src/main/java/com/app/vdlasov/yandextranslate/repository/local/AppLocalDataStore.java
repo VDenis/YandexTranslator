@@ -3,9 +3,9 @@ package com.app.vdlasov.yandextranslate.repository.local;
 import com.app.vdlasov.yandextranslate.repository.AppDataStore;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhraseSQLiteTypeMapping;
-import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhraseStorIOSQLitePutResolver;
 import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite;
+import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResult;
 
 import android.content.Context;
 
@@ -71,6 +71,12 @@ public class AppLocalDataStore implements AppDataStore {
                 .object(phrase)
                 .prepare()
                 .executeAsBlocking();
+    }
+
+    public Observable<DeleteResult> deleteTranslatePhraseFromDatabase(int id) {
+        return mStorIOSQLite.delete().byQuery(DatabaseContract.TranslatePhraseTableMeta.DELETE_BY_ID(id))
+                .prepare()
+                .asRxObservable();
     }
 
     public void deleteTranslatePhrasesFromDatabase(List<TranslatePhrase> history) {

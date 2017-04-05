@@ -71,6 +71,14 @@ public class DatabaseContract {
                 .table(TranslatePhraseTableMeta.TABLE_NAME)
                 .build();
 
+        public static final DeleteQuery DELETE_BY_ID(int id) {
+            return DeleteQuery.builder()
+                    .table(TranslatePhraseTableMeta.TABLE_NAME)
+                    .where(TranslatePhraseTableMeta.COLUMN_ID + " = ?")
+                    .whereArgs(id)
+                    .build();
+        }
+
         public static final PutResolver<TranslatePhrase> PUT_RESOLVER = new DefaultPutResolver<TranslatePhrase>() {
             @NonNull
             @Override

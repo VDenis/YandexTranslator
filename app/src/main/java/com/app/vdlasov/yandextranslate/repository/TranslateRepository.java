@@ -6,6 +6,7 @@ import com.app.vdlasov.yandextranslate.model.YandexTranslateResponse;
 import com.app.vdlasov.yandextranslate.repository.local.AppLocalDataStore;
 import com.app.vdlasov.yandextranslate.repository.local.DatabaseContract;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
+import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResult;
 
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,10 @@ public class TranslateRepository {
 
     public Observable<TranslatePhrase> getTranslateFromHistory(int id) {
         return mAppLocalDataStore.getTranslateFromHistory(id);
+    }
+
+    public Observable<DeleteResult> deleteTranslatePhrasesFromDatabase(int id) {
+        return mAppLocalDataStore.deleteTranslatePhraseFromDatabase(id);
     }
 
     public void clearTranslateHistory() {
