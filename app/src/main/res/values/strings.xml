@@ -20,6 +20,10 @@
     <string name="preference_title_about">About</string>
     <string name="preference_text_about">Yandex translate application. Author: Denis Vlasov.</string>
 
+    <!-- Select language activity -->
+    <string name="title_select_language_from">Source language</string>
+    <string name="title_select_language_to">Target language</string>
+
     <string-array name="languages_name_to_abbreviation">
         <item name="Russian">ru</item>
         <item name="English">en</item>

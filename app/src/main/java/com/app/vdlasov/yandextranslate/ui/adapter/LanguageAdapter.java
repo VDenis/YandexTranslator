@@ -1,7 +1,7 @@
 package com.app.vdlasov.yandextranslate.ui.adapter;
 
 import com.app.vdlasov.yandextranslate.R;
-import com.app.vdlasov.yandextranslate.model.HistoryUiItem;
+import com.app.vdlasov.yandextranslate.model.LanguageUiItem;
 import com.app.vdlasov.yandextranslate.ui.common.OnItemClickListener;
 import com.app.vdlasov.yandextranslate.utils.Search;
 
@@ -17,54 +17,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Denis on 04.04.2017.
+ * Created by Denis on 05.04.2017.
  */
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> implements Filterable {
+public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHolder> implements Filterable {
 
-    private List<HistoryUiItem> dataset;
+    private List<LanguageUiItem> dataset;
 
-    private List<HistoryUiItem> filteredDataset = new ArrayList<>();
+    private List<LanguageUiItem> filteredDataset = new ArrayList<>();
 
-    private CustomFilter filter = new CustomFilter(this);
+    private LanguageAdapter.CustomFilter filter = new LanguageAdapter.CustomFilter(this);
 
     private String filterString = "";
 
     private OnItemClickListener clickListener;
 
-    public HistoryAdapter(final List<HistoryUiItem> dataset,
-            final OnItemClickListener clickListener) {
+    public LanguageAdapter(final List<LanguageUiItem> dataset, final OnItemClickListener clickListener) {
         this.dataset = dataset;
         this.filteredDataset.addAll(dataset);
         this.clickListener = clickListener;
     }
 
-    public void add(List<HistoryUiItem> newDataset) {
+    public void add(List<LanguageUiItem> newDataset) {
         dataset.clear();
         dataset.addAll(newDataset);
         getFilter().filter(filterString);
         //notifyDataSetChanged();
     }
 
+    public LanguageUiItem getItem(int position) {
+        return filteredDataset.get(position);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_language, parent, false);
         return new ViewHolder(view, clickListener);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-//        holder.inputText.setText(dataset.get(position).getInputText());
-//        holder.translatedText.setText(dataset.get(position).getTranslatedText());
-//        holder.lang.setText(dataset.get(position).getLang());
-        holder.inputText.setText(filteredDataset.get(position).getInputText());
-        holder.translatedText.setText(filteredDataset.get(position).getTranslatedText());
-        holder.lang.setText(filteredDataset.get(position).getLang());
+        holder.languageName.setText(filteredDataset.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        //return dataset.size();
         return filteredDataset.size();
     }
 
@@ -73,12 +70,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return filter;
     }
 
-
     private class CustomFilter extends Filter {
 
-        private HistoryAdapter mAdapter;
+        private LanguageAdapter mAdapter;
 
-        private CustomFilter(HistoryAdapter mAdapter) {
+        private CustomFilter(LanguageAdapter mAdapter) {
             super();
             this.mAdapter = mAdapter;
         }
@@ -92,7 +88,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 filteredDataset.addAll(dataset);
             } else {
                 filterString = constraint.toString().toLowerCase().trim();
-                filteredDataset.addAll(Search.filterByPatternHistoryUiItem(dataset, filterString));
+                filteredDataset.addAll(Search.filterByPatternLanguageUiItem(dataset, filterString));
             }
 
             results.values = filteredDataset;
@@ -108,24 +104,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView inputText;
-
-        public TextView translatedText;
-
-        public TextView lang;
+        public TextView languageName;
 
         public ViewHolder(final View itemView, final OnItemClickListener listener) {
             super(itemView);
-            inputText = (TextView) itemView.findViewById(R.id.item_history_text_view_input_text);
-            translatedText = (TextView) itemView.findViewById(R.id.item_history_text_view_translated_text);
-            lang = (TextView) itemView.findViewById(R.id.item_history_text_view_lang);
+            languageName = (TextView) itemView.findViewById(R.id.item_language_text_view_language_name);
             setListener(listener);
         }
 
-        private void setListener(final OnItemClickListener listener) {
+        public void setListener(final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     if (listener != null) {
                         listener.onItemClick(getAdapterPosition());
                     }

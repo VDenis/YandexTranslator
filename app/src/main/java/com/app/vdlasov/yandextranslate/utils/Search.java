@@ -1,6 +1,7 @@
 package com.app.vdlasov.yandextranslate.utils;
 
 import com.app.vdlasov.yandextranslate.model.HistoryUiItem;
+import com.app.vdlasov.yandextranslate.model.LanguageUiItem;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class Search {
 
-    public static List<HistoryUiItem> filterByPattern(List<HistoryUiItem> dataset, String pattern) {
+    public static List<HistoryUiItem> filterByPatternHistoryUiItem(List<HistoryUiItem> dataset, String pattern) {
         List<HistoryUiItem> newDataset = new ArrayList<>();
         Iterator<HistoryUiItem> iter = dataset.iterator();
         while (iter.hasNext()) {
@@ -20,6 +21,18 @@ public class Search {
             if (containsIgnoreCase(history.getInputText().toLowerCase().trim(), pattern)
                     || containsIgnoreCase(history.getTranslatedText().toLowerCase().trim(), pattern)) {
                 newDataset.add(history);
+            }
+        }
+        return newDataset;
+    }
+
+    public static List<LanguageUiItem> filterByPatternLanguageUiItem(List<LanguageUiItem> dataset, String pattern) {
+        List<LanguageUiItem> newDataset = new ArrayList<>();
+        Iterator<LanguageUiItem> iter = dataset.iterator();
+        while (iter.hasNext()) {
+            LanguageUiItem language = iter.next();
+            if (containsIgnoreCase(language.getName().toLowerCase().trim(), pattern)) {
+                newDataset.add(language);
             }
         }
         return newDataset;

@@ -19,6 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import static android.app.Activity.RESULT_OK;
+import static com.app.vdlasov.yandextranslate.ui.activity.SelectLanguageActivity.SELECT_LANGUAGE_FROM;
+import static com.app.vdlasov.yandextranslate.ui.activity.SelectLanguageActivity.SELECT_LANGUAGE_RESULT;
+import static com.app.vdlasov.yandextranslate.ui.activity.SelectLanguageActivity.SELECT_LANGUAGE_TO;
+import static com.app.vdlasov.yandextranslate.ui.activity.SelectLanguageActivity.getIntent;
+
 public class TranslateFragment extends MvpFragment implements TranslateView, View.OnClickListener {
 
     public static final String TAG = "TranslateFragment";
@@ -39,6 +45,11 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
     private String translateFromLang = "None";
 
     private String translateToLang = "None";
+
+    // code for activity for result
+    private static final int REQUEST_CODE_LANGUAGE_FROM = 1;
+
+    private static final int REQUEST_CODE_LANGUAGE_TO = 2;
 
     public static TranslateFragment newInstance() {
         TranslateFragment fragment = new TranslateFragment();
@@ -89,7 +100,7 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
         if (savedInstanceState == null) {
             translateFromLang = Config.Lang_Names.get(0);
             translateToLang = Config.Lang_Names.get(1);
-            setLanguages();
+            updateLanguages();
         }
         return view;
     }
@@ -113,23 +124,45 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            String language = data.getStringExtra(SELECT_LANGUAGE_RESULT);
+            switch (requestCode) {
+                // switch languages if user select existing
+                case REQUEST_CODE_LANGUAGE_FROM: {
+                    if (language.equals(translateToLang)) {
+                        translateToLang = translateFromLang;
+                    }
+                    translateFromLang = language;
+                    break;
+                }
+                case REQUEST_CODE_LANGUAGE_TO: {
+                    if (language.equals(translateFromLang)) {
+                        translateFromLang = translateToLang;
+                    }
+                    translateToLang = language;
+                    break;
+                }
+            }
+            updateLanguages();
+        }
     }
 
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.fragment_translate_button_lang_from: {
+                startActivityForResult(getIntent(getActivity(), SELECT_LANGUAGE_FROM), REQUEST_CODE_LANGUAGE_FROM);
                 break;
             }
             case R.id.fragment_translate_button_lang_to: {
+                startActivityForResult(getIntent(getActivity(), SELECT_LANGUAGE_TO), REQUEST_CODE_LANGUAGE_TO);
                 break;
             }
             case R.id.fragment_translate_button_lang_switch: {
                 String temp = translateToLang;
                 translateToLang = translateFromLang;
                 translateFromLang = temp;
-                setLanguages();
+                updateLanguages();
                 break;
             }
         }
@@ -140,8 +173,12 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
         tvResult.setText("");
     }
 
-    private void setLanguages() {
-        btnLangFrom.setText(translateFromLang);
-        btnLangTo.setText(translateToLang);
+    private void updateLanguages() {
+        if (!translateFromLang.isEmpty()) {
+            btnLangFrom.setText(translateFromLang);
+        }
+        if (!translateToLang.isEmpty()) {
+            btnLangTo.setText(translateToLang);
+        }
     }
 }
