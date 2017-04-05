@@ -51,10 +51,28 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
 
     private static final int REQUEST_CODE_LANGUAGE_TO = 2;
 
+    // fragment arguments
+    private static final String ARGUMENT_DATABASE_ID_KEY = "ARGUMENT_DATABASE_ID_KEY";
+
+    // save instant state
+    private static final String SAVE_INSTANT_STATE_LANG_FROM = "SAVE_INSTANT_STATE_LANG_FROM";
+
+    private static final String SAVE_INSTANT_STATE_LANG_TO = "SAVE_INSTANT_STATE_LANG_TO";
+
     public static TranslateFragment newInstance() {
         TranslateFragment fragment = new TranslateFragment();
 
         Bundle args = new Bundle();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static TranslateFragment newInstance(Integer databaseId) {
+        TranslateFragment fragment = new TranslateFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(ARGUMENT_DATABASE_ID_KEY, databaseId);
         fragment.setArguments(args);
 
         return fragment;
@@ -97,12 +115,33 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
         btnLangFrom.setOnClickListener(this);
         btnLangTo.setOnClickListener(this);
         btnLangSwitch.setOnClickListener(this);
-        if (savedInstanceState == null) {
+
+        Bundle intent = getArguments();
+        if (!intent.isEmpty() && intent.containsKey(ARGUMENT_DATABASE_ID_KEY)) {
+            // load from database
+            int databaseId = intent.getInt(ARGUMENT_DATABASE_ID_KEY);
+            mTranslatePresenter.loadFromDatabaseTranslatePhrase(databaseId);
+        } else if (savedInstanceState == null) {
+            // first launch
             translateFromLang = Config.Lang_Names.get(0);
             translateToLang = Config.Lang_Names.get(1);
             updateLanguages();
+        } else {
+            // save state
+            if (savedInstanceState.containsKey(SAVE_INSTANT_STATE_LANG_FROM)
+                    && savedInstanceState.containsKey(SAVE_INSTANT_STATE_LANG_TO)) {
+                translateFromLang = savedInstanceState.getString(SAVE_INSTANT_STATE_LANG_FROM);
+                translateToLang = savedInstanceState.getString(SAVE_INSTANT_STATE_LANG_TO);
+            }
         }
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SAVE_INSTANT_STATE_LANG_FROM, translateFromLang);
+        outState.putString(SAVE_INSTANT_STATE_LANG_TO, translateToLang);
     }
 
     @Override
@@ -112,8 +151,17 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
     }
 
     @Override
-    public void showTranslatedPhrase(final String result) {
-        tvResult.setText(result);
+    public void showTranslatedPhrase(final String primary, final String translated, final String langFrom,
+            final String langTo) {
+        if (!edtPhrase.getText().toString().equals(primary)) {
+            edtPhrase.setText(primary);
+        }
+        translateFromLang = langFrom;
+        translateToLang = langTo;
+        updateLanguages();
+        tvResult.setText(translated);
+        // clear fragment arguments
+        getArguments().clear();
     }
 
     @Override
@@ -174,11 +222,7 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
     }
 
     private void updateLanguages() {
-        if (!translateFromLang.isEmpty()) {
             btnLangFrom.setText(translateFromLang);
-        }
-        if (!translateToLang.isEmpty()) {
             btnLangTo.setText(translateToLang);
-        }
     }
 }

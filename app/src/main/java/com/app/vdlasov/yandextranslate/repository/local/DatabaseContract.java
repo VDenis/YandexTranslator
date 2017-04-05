@@ -54,6 +54,14 @@ public class DatabaseContract {
                 .table(TranslatePhraseTableMeta.TABLE_NAME)
                 .build();
 
+        public static Query QUERY_BY_ID(int id) {
+            return Query.builder()
+                    .table(TranslatePhraseTableMeta.TABLE_NAME)
+                    .where(TranslatePhraseTableMeta.COLUMN_ID + " = ?")
+                    .whereArgs(id)
+                    .build();
+        }
+
         public static final Query QUERY_ALL_SORTED = Query.builder()
                 .table(TranslatePhraseTableMeta.TABLE_NAME)
                 .orderBy(COLUMN_DATE + " DESC")
@@ -77,8 +85,9 @@ public class DatabaseContract {
             protected UpdateQuery mapToUpdateQuery(@NonNull final TranslatePhrase object) {
                 return UpdateQuery.builder()
                         .table(TranslatePhraseTableMeta.TABLE_NAME)
-                        .where(TranslatePhraseTableMeta.COLUMN_PRIMARY_TEXT + " = ?")
-                        .whereArgs(object.getPrimary())
+                        .where(TranslatePhraseTableMeta.COLUMN_PRIMARY_TEXT + " = ? AND "
+                                + TranslatePhraseTableMeta.COLUMN_TRANSLATED_TEXT + " = ?")
+                        .whereArgs(object.getPrimary(), object.getTranslated())
                         .build();
             }
 

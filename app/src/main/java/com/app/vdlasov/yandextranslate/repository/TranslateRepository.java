@@ -44,6 +44,10 @@ public class TranslateRepository {
         return mAppLocalDataStore.getTranslatePhrases();
     }
 
+    public Observable<TranslatePhrase> getTranslateFromHistory(int id) {
+        return mAppLocalDataStore.getTranslateFromHistory(id);
+    }
+
     public void clearTranslateHistory() {
         mAppLocalDataStore.deleteTranslatePhrasesFromDatabase();
     }

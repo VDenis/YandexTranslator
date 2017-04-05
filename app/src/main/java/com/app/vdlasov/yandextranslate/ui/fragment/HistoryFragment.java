@@ -10,6 +10,7 @@ import com.app.vdlasov.yandextranslate.ui.common.OnItemClickListener;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +35,8 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
     private RecyclerView recyclerView;
 
     private HistoryAdapter adapter;
+
+    private OnFragmentInteractionListener mListener;
 
     @InjectPresenter
     HistoryPresenter mHistoryPresenter;
@@ -69,8 +72,8 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
         adapter = new HistoryAdapter(createDataset(), new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getContext(), "position = " + position, Toast.LENGTH_SHORT).show();
-
+                ///Toast.makeText(getContext(), "position = " + position, Toast.LENGTH_SHORT).show();
+                mListener.onFragmentTranslateFromHistory(adapter.getItem(position).getId());
             }
         });
         recyclerView.setAdapter(adapter);
@@ -118,6 +121,27 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
 //        array.add(new HistoryUiItem("Tree", "Дерево", "en-ru"));
 //        array.add(new HistoryUiItem("Дерево", "Tree", "ru-en"));
         return array;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentTranslateFromHistory(Integer databaseId);
     }
 
     @Override

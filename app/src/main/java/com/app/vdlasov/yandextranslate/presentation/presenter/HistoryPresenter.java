@@ -37,7 +37,8 @@ public class HistoryPresenter extends MvpPresenter<HistoryView> {
                     public void call(final List<TranslatePhrase> translatePhrases) {
                         List<HistoryUiItem> list = new ArrayList<HistoryUiItem>();
                         for (TranslatePhrase phrase : translatePhrases) {
-                            list.add(new HistoryUiItem(phrase.getPrimary(), phrase.translated, phrase.getLang()));
+                            list.add(new HistoryUiItem(phrase.getId(), phrase.getPrimary(), phrase.getTranslated(),
+                                    phrase.getLang()));
                         }
                         getViewState().showTranslateHistory(list);
                     }

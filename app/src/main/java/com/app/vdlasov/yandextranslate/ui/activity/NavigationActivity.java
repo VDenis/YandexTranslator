@@ -19,7 +19,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
 public class NavigationActivity extends MvpActivity implements NavigationView,
-        BottomNavigationView.OnNavigationItemSelectedListener {
+        BottomNavigationView.OnNavigationItemSelectedListener, HistoryFragment.OnFragmentInteractionListener {
 
     public static final String TAG = "NavigationActivity";
 
@@ -63,6 +63,12 @@ public class NavigationActivity extends MvpActivity implements NavigationView,
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onFragmentTranslateFromHistory(final Integer databaseId) {
+        bottomNavigationView.getMenu().getItem(MENU_DIALOGS).setChecked(true);
+        addFragment(TranslateFragment.newInstance(databaseId));
     }
 
     @Override

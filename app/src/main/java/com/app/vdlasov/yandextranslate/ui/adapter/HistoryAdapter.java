@@ -2,6 +2,7 @@ package com.app.vdlasov.yandextranslate.ui.adapter;
 
 import com.app.vdlasov.yandextranslate.R;
 import com.app.vdlasov.yandextranslate.model.HistoryUiItem;
+import com.app.vdlasov.yandextranslate.model.LanguageUiItem;
 import com.app.vdlasov.yandextranslate.ui.common.OnItemClickListener;
 import com.app.vdlasov.yandextranslate.utils.Search;
 
@@ -44,6 +45,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         dataset.addAll(newDataset);
         getFilter().filter(filterString);
         //notifyDataSetChanged();
+    }
+    public HistoryUiItem getItem(int position) {
+        return filteredDataset.get(position);
     }
 
     @Override
