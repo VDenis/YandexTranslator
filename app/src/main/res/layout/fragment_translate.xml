@@ -86,6 +86,7 @@
         android:src="@drawable/ic_translate_black_24px" />
 
     <ImageButton
+        android:id="@+id/fragment_translate_image_button_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/fragment_translate_edit_text_phrase"

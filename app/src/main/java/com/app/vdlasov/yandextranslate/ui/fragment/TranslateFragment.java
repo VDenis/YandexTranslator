@@ -64,6 +64,15 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
                     }
                 });
 
+        ((ImageButton) view.findViewById(R.id.fragment_translate_image_button_clear)).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        clearView();
+                    }
+                }
+        );
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -124,6 +133,11 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
                 break;
             }
         }
+    }
+
+    private void clearView() {
+        edtPhrase.setText("");
+        tvResult.setText("");
     }
 
     private void setLanguages() {
