@@ -9,3 +9,12 @@ Features:
 * Translate;
 * History;
 * Search.
+
+Technologies:
+* [Mvp Moxy](https://github.com/Arello-Mobile/Moxy)
+* [Dagger2](https://github.com/google/dagger)
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [Retrofit](https://github.com/square/retrofit)
+* [Okhttp](https://github.com/square/okhttp)
+* [StoriIO](https://github.com/pushtorefresh/storio)
+* [Stetho](https://github.com/facebook/stetho)
