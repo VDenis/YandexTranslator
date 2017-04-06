@@ -1,13 +1,22 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'yandextranslate'
+            keyPassword 'passworld'
+            storeFile file('../cert/DebugKeystore.jks')
+            storePassword 'passworld'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.app.vdlasov.yandextranslate"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -15,16 +24,50 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:preference-v7:25.3.1'
     testCompile 'junit:junit:4.12'
+
+    // mvp moxy
+    compile 'com.arello-mobile:moxy:1.4.6'
+    compile 'com.arello-mobile:moxy-app-compat:1.4.6'
+    provided 'com.arello-mobile:moxy-compiler:1.4.6'
+
+    // dagger2
+    compile 'com.google.dagger:dagger:2.8'
+    apt 'com.google.dagger:dagger-compiler:2.8'
+
+    // rxjava
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.2.5'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
+
+    // retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-moshi:2.0.0'
+
+    // okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+
+    // storio
+    compile 'com.pushtorefresh.storio:sqlite:1.12.3'
+    compile 'com.pushtorefresh.storio:sqlite-annotations:1.12.3'
+    apt 'com.pushtorefresh.storio:sqlite-annotations-processor:1.12.3'
+
+    // stetho
+    compile 'com.facebook.stetho:stetho:1.4.2'
+    compile 'com.facebook.stetho:stetho-urlconnection:1.4.2'
 }
