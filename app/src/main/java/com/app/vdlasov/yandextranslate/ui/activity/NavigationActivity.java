@@ -57,8 +57,7 @@ public class NavigationActivity extends MvpActivity implements NavigationView,
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.navigation_translate);
-        if (fragment == null) {
+        if (bottomNavigationView.getSelectedItemId() != R.id.navigation_translate) {
             setTranslateView();
         } else {
             super.onBackPressed();

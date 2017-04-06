@@ -6,13 +6,13 @@
 
         <Preference
             android:key="@string/preference_key_clear_history_button"
-            android:summary="Clear translate history"
-            android:title="Clear history" />
+            android:summary="@string/preference_summary_clear_history_button"
+            android:title="@string/preference_title_clear_history_button" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/preference_title_about">
 
-        <Preference app:layout="@layout/preference_about"/>
+        <Preference app:layout="@layout/preference_about" />
     </PreferenceCategory>
 </PreferenceScreen>

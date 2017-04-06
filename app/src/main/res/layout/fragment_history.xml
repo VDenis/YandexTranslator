@@ -37,7 +37,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:hint="Search in history" />
+        android:hint="@string/hint_search_in_history" />
 
     <com.app.vdlasov.yandextranslate.ui.common.RecyclerViewEmptySupport
         android:id="@+id/fragment_history_recycler_history"
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="No items, clear filter or translate more"
+        android:text="@string/text_no_items_list_empty"
         android:textSize="18sp"
         android:visibility="gone" />
 </LinearLayout>

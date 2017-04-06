@@ -1,15 +1,16 @@
-package com.app.vdlasov.yandextranslate.ui.common;
+package com.app.vdlasov.yandextranslate.presentation.presenter;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.MvpPresenter;
+import com.arellomobile.mvp.MvpView;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * Created by Denis on 02.04.2017.
+ * Created by Denis on 06.04.2017.
  */
 
-public class MvpFragment extends MvpAppCompatFragment {
+public class BasePresenter<View extends MvpView> extends MvpPresenter<View> {
     // unsubscribe rx subscription on destroy presenter
     private CompositeSubscription subscriptions = new CompositeSubscription();
 

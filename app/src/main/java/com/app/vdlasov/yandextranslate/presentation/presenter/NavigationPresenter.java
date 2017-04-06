@@ -6,6 +6,6 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 @InjectViewState
-public class NavigationPresenter extends MvpPresenter<NavigationView> {
+public class NavigationPresenter extends BasePresenter<NavigationView> {
 
 }

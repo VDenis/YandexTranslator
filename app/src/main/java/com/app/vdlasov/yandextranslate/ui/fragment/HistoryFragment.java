@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.Subscription;
 import rx.functions.Action1;
 
 public class HistoryFragment extends MvpFragment implements HistoryView {
@@ -127,18 +126,20 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
                 if (direction == ItemTouchHelper.LEFT) {    //if swipe left
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()); //alert for confirm to delete
-                    builder.setMessage("Are you sure to delete?");    //set message
+                    builder.setMessage(R.string.dialog_delete_history_title);    //set message
 
-                    builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() {
-                        //when click on DELETE
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mHistoryPresenter.deleteTranslatePhrasesFromDatabase(adapter.getItem(position).getId());
-                            adapter.remove(position);
+                    builder.setPositiveButton(R.string.dialog_delete_history_remove_button,
+                            new DialogInterface.OnClickListener() {
+                                //when click on DELETE
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mHistoryPresenter
+                                            .deleteTranslatePhrasesFromDatabase(adapter.getItem(position).getId());
+                                    adapter.remove(position);
 
-                            return;
-                        }
-                    }).setNegativeButton("CANCEL",
+                                    return;
+                                }
+                            }).setNegativeButton(R.string.dialog_delete_history_cancel_button,
                             new DialogInterface.OnClickListener() {
                                 //not removing items if cancel is done
                                 @Override
@@ -159,8 +160,7 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
 
         EditText edtFilter = (EditText) view.findViewById(R.id.fragment_history_edit_text_filter);
 
-        // TODO: make sure to unsubscribe the subscription.
-        Subscription editTextSub = RxTextView
+        unsubscribeOnDestroy(RxTextView
                 .textChanges(edtFilter)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<CharSequence>() {
@@ -168,24 +168,7 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
                     public void call(final CharSequence charSequence) {
                         adapter.getFilter().filter(charSequence.toString());
                     }
-                });
-
-//        edtFilter.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(final Editable s) {
-//                adapter.getFilter().filter(s.toString());
-//            }
-//        });
+                }));
 
         mHistoryPresenter.getTranslateHistory();
     }

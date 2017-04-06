@@ -10,7 +10,6 @@ import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
 import com.app.vdlasov.yandextranslate.utils.Language;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 
 import javax.inject.Inject;
 
@@ -20,7 +19,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 @InjectViewState
-public class TranslatePresenter extends MvpPresenter<TranslateView> {
+public class TranslatePresenter extends BasePresenter<TranslateView> {
 
     @Inject
     TranslateRepository translateManager;
@@ -32,7 +31,7 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
     public void requestTranslatePhrase(final String langFrom, final String langTo, final String text) {
         final String abbreviationLangFrom = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langFrom));
         final String abbreviationLangTo = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langTo));
-        translateManager.translate(abbreviationLangFrom + "-" + abbreviationLangTo, text)
+        unsubscribeOnDestroy(translateManager.translate(abbreviationLangFrom + "-" + abbreviationLangTo, text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<YandexTranslateResponse>() {
@@ -53,7 +52,7 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
                             // database, device error
                             //getViewState().showError(throwable.getMessage());
                             // try load from database
-                            translateManager
+                            unsubscribeOnDestroy(translateManager
                                     .getTranslateFromHistory(abbreviationLangFrom + "-" + abbreviationLangTo, text)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -79,15 +78,15 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
                                         public void call(final Throwable throwable) {
                                             getViewState().showError(R.string.error_database_crash);
                                         }
-                                    });
+                                    }));
                             getViewState().showError(R.string.error_no_network);
                         }
                     }
-                });
+                }));
     }
 
     public void loadFromDatabaseTranslatePhrase(int id) {
-        translateManager.getTranslateFromHistory(id)
+        unsubscribeOnDestroy(translateManager.getTranslateFromHistory(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<TranslatePhrase>() {
@@ -101,6 +100,6 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
                                 Config.Lang_Names.get(Config.Lang_Abbreviation
                                         .indexOf(Language.parseLangTo(translatePhrase.getLang()))));
                     }
-                });
+                }));
     }
 }

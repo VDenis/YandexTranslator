@@ -8,7 +8,6 @@ import com.app.vdlasov.yandextranslate.presentation.view.HistoryView;
 import com.app.vdlasov.yandextranslate.repository.TranslateRepository;
 import com.app.vdlasov.yandextranslate.repository.local.models.TranslatePhrase;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResult;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 @InjectViewState
-public class HistoryPresenter extends MvpPresenter<HistoryView> {
+public class HistoryPresenter extends BasePresenter<HistoryView> {
 
     @Inject
     TranslateRepository translateManager;
@@ -31,7 +30,7 @@ public class HistoryPresenter extends MvpPresenter<HistoryView> {
     }
 
     public void getTranslateHistory() {
-        translateManager.getTranslateHistory()
+        unsubscribeOnDestroy(translateManager.getTranslateHistory()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<TranslatePhrase>>() {
@@ -49,11 +48,11 @@ public class HistoryPresenter extends MvpPresenter<HistoryView> {
                     public void call(final Throwable throwable) {
                         getViewState().showError(R.string.error_database_crash);
                     }
-                });
+                }));
     }
 
     public void deleteTranslatePhrasesFromDatabase(int id) {
-        translateManager.deleteTranslatePhrasesFromDatabase(id)
+        unsubscribeOnDestroy(translateManager.deleteTranslatePhrasesFromDatabase(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<DeleteResult>() {
@@ -67,6 +66,6 @@ public class HistoryPresenter extends MvpPresenter<HistoryView> {
                         // on error reload all items from database
                         getTranslateHistory();
                     }
-                });
+                }));
     }
 }

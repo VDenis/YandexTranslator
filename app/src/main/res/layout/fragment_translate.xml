@@ -64,7 +64,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@drawable/edit_text_background"
         android:gravity="top"
-        android:hint="@string/fragment_translate_edit_text_title_phrase"
+        android:hint="@string/hint_input_translate_phrase"
         android:imeOptions="actionDone"
         android:inputType="textMultiLine"
         android:maxLines="4"

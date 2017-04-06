@@ -97,8 +97,7 @@ public class SelectLanguageActivity extends MvpActivity implements SelectLanguag
 
         EditText edtFilter = (EditText) findViewById(R.id.activity_select_language_edit_text_filter);
 
-        // TODO: make sure to unsubscribe the subscription.
-        Subscription editTextSub = RxTextView
+        unsubscribeOnStop(RxTextView
                 .textChanges(edtFilter)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<CharSequence>() {
@@ -106,7 +105,7 @@ public class SelectLanguageActivity extends MvpActivity implements SelectLanguag
                     public void call(final CharSequence charSequence) {
                         adapter.getFilter().filter(charSequence.toString());
                     }
-                });
+                }));
     }
 
     private List<LanguageUiItem> createDataset() {
