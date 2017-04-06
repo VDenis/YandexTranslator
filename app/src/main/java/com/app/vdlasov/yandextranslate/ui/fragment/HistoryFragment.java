@@ -7,6 +7,7 @@ import com.app.vdlasov.yandextranslate.presentation.view.HistoryView;
 import com.app.vdlasov.yandextranslate.ui.adapter.HistoryAdapter;
 import com.app.vdlasov.yandextranslate.ui.common.MvpFragment;
 import com.app.vdlasov.yandextranslate.ui.common.OnItemClickListener;
+import com.app.vdlasov.yandextranslate.ui.common.RecyclerViewEmptySupport;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -36,7 +37,7 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
 
     public static final String TAG = "HistoryFragment";
 
-    private RecyclerView recyclerView;
+    private RecyclerViewEmptySupport recyclerView;
 
     private HistoryAdapter adapter;
 
@@ -95,10 +96,11 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
     }
 
     private void initRecyclerView(final View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.fragment_history_recycler_history);
+        recyclerView = (RecyclerViewEmptySupport) view.findViewById(R.id.fragment_history_recycler_history);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setEmptyView(view.findViewById(R.id.fragment_history_text_view_list_empty));
         adapter = new HistoryAdapter(createDataset(), new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
