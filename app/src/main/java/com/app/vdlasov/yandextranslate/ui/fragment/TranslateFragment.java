@@ -7,13 +7,17 @@ import com.app.vdlasov.yandextranslate.presentation.view.TranslateView;
 import com.app.vdlasov.yandextranslate.ui.common.MvpFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -88,6 +92,10 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
                 new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
+                        // hide virtual keyboard
+                        InputMethodManager imm = (InputMethodManager) getActivity().getBaseContext()
+                                .getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                         mTranslatePresenter.requestTranslatePhrase(translateFromLang, translateToLang,
                                 edtPhrase.getText().toString());
                     }
@@ -166,9 +174,16 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
 
     @Override
     public void showError(final String message) {
-
+        View view = getView();
+        if (view != null) {
+            Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
+    @Override
+    public void showError(@StringRes final int messageResID) {
+        showError(getString(messageResID));
+    }
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -222,7 +237,7 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
     }
 
     private void updateLanguages() {
-            btnLangFrom.setText(translateFromLang);
-            btnLangTo.setText(translateToLang);
+        btnLangFrom.setText(translateFromLang);
+        btnLangTo.setText(translateToLang);
     }
 }

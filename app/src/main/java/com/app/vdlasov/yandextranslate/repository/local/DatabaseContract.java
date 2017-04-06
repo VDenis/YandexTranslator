@@ -62,6 +62,15 @@ public class DatabaseContract {
                     .build();
         }
 
+        public static Query QUERY_BY_PRIMARY_AND_LANG(String lang, String text) {
+            return Query.builder()
+                    .table(TranslatePhraseTableMeta.TABLE_NAME)
+                    .where(TranslatePhraseTableMeta.COLUMN_LANG + " = ? AND "
+                            + TranslatePhraseTableMeta.COLUMN_PRIMARY_TEXT + " = ?")
+                    .whereArgs(lang, text)
+                    .build();
+        }
+
         public static final Query QUERY_ALL_SORTED = Query.builder()
                 .table(TranslatePhraseTableMeta.TABLE_NAME)
                 .orderBy(COLUMN_DATE + " DESC")

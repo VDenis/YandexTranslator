@@ -49,6 +49,10 @@ public class TranslateRepository {
         return mAppLocalDataStore.getTranslateFromHistory(id);
     }
 
+    public Observable<TranslatePhrase> getTranslateFromHistory(final String lang, final String text) {
+        return mAppLocalDataStore.getTranslateFromHistory(lang, text);
+    }
+
     public Observable<DeleteResult> deleteTranslatePhrasesFromDatabase(int id) {
         return mAppLocalDataStore.deleteTranslatePhraseFromDatabase(id);
     }

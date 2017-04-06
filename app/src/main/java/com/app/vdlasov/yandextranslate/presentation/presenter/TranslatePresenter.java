@@ -2,6 +2,7 @@ package com.app.vdlasov.yandextranslate.presentation.presenter;
 
 
 import com.app.vdlasov.yandextranslate.Config;
+import com.app.vdlasov.yandextranslate.R;
 import com.app.vdlasov.yandextranslate.di.DI;
 import com.app.vdlasov.yandextranslate.model.YandexTranslateResponse;
 import com.app.vdlasov.yandextranslate.presentation.view.TranslateView;
@@ -29,8 +30,8 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
     }
 
     public void requestTranslatePhrase(final String langFrom, final String langTo, final String text) {
-        String abbreviationLangFrom = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langFrom));
-        String abbreviationLangTo = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langTo));
+        final String abbreviationLangFrom = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langFrom));
+        final String abbreviationLangTo = Config.Lang_Abbreviation.get(Config.Lang_Names.indexOf(langTo));
         translateManager.translate(abbreviationLangFrom + "-" + abbreviationLangTo, text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -46,14 +47,43 @@ public class TranslatePresenter extends MvpPresenter<TranslateView> {
                         if (throwable instanceof HttpException) {
                             // http, internet error
                             HttpException exception = (HttpException) throwable;
-                            getViewState().showError(exception.code() + " " + exception.message());
+                            //getViewState().showError(exception.code() + " " + exception.message());
+                            getViewState().showError(R.string.error_bad_internet_request);
                         } else {
                             // database, device error
-                            getViewState().showError(throwable.getMessage());
+                            //getViewState().showError(throwable.getMessage());
+                            // try load from database
+                            translateManager
+                                    .getTranslateFromHistory(abbreviationLangFrom + "-" + abbreviationLangTo, text)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Action1<TranslatePhrase>() {
+                                        @Override
+                                        public void call(final TranslatePhrase translatePhrase) {
+                                            // check if didn't find item in db will be null
+                                            if (translatePhrase != null) {
+                                                getViewState().showTranslatedPhrase(
+                                                        translatePhrase.getPrimary(),
+                                                        translatePhrase.getTranslated(),
+                                                        Config.Lang_Names.get(Config.Lang_Abbreviation
+                                                                .indexOf(
+                                                                        Language.parseLangFrom(
+                                                                                translatePhrase.getLang()))),
+                                                        Config.Lang_Names.get(Config.Lang_Abbreviation
+                                                                .indexOf(Language.parseLangTo(
+                                                                        translatePhrase.getLang()))));
+                                            }
+                                        }
+                                    }, new Action1<Throwable>() {
+                                        @Override
+                                        public void call(final Throwable throwable) {
+                                            getViewState().showError(R.string.error_database_crash);
+                                        }
+                                    });
+                            getViewState().showError(R.string.error_no_network);
                         }
                     }
                 });
-        //getViewState().showTranslatedPhrase(text.concat(" translated"));
     }
 
     public void loadFromDatabaseTranslatePhrase(int id) {

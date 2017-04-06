@@ -50,6 +50,14 @@ public class AppLocalDataStore implements AppDataStore {
                 .asRxObservable();
     }
 
+    public Observable<TranslatePhrase> getTranslateFromHistory(String lang, String text) {
+        return mStorIOSQLite.get()
+                .object(TranslatePhrase.class)
+                .withQuery(DatabaseContract.TranslatePhraseTableMeta.QUERY_BY_PRIMARY_AND_LANG(lang, text))
+                .prepare()
+                .asRxObservable();
+    }
+
     public void saveTranslatePhrasesToDatabase(List<TranslatePhrase> history) {
         mStorIOSQLite.put()
                 .objects(history)

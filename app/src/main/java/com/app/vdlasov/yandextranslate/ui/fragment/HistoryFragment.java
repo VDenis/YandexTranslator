@@ -13,6 +13,8 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,6 +66,32 @@ public class HistoryFragment extends MvpFragment implements HistoryView {
     @Override
     public void showTranslateHistory(final List<HistoryUiItem> history) {
         adapter.add(history);
+    }
+
+    @Override
+    public void showError(final String message) {
+        View view = getView();
+        if (view != null) {
+            Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void showError(@StringRes final int messageResID) {
+        showError(getString(messageResID));
+    }
+
+    @Override
+    public void showSuccess(final String message) {
+        View view = getView();
+        if (view != null) {
+            Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void showSuccess(@StringRes final int messageResID) {
+        showSuccess(getString(messageResID));
     }
 
     private void initRecyclerView(final View view) {

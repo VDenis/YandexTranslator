@@ -1,6 +1,7 @@
 package com.app.vdlasov.yandextranslate.presentation.presenter;
 
 
+import com.app.vdlasov.yandextranslate.R;
 import com.app.vdlasov.yandextranslate.di.DI;
 import com.app.vdlasov.yandextranslate.model.HistoryUiItem;
 import com.app.vdlasov.yandextranslate.presentation.view.HistoryView;
@@ -43,6 +44,11 @@ public class HistoryPresenter extends MvpPresenter<HistoryView> {
                         }
                         getViewState().showTranslateHistory(list);
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(final Throwable throwable) {
+                        getViewState().showError(R.string.error_database_crash);
+                    }
                 });
     }
 
@@ -53,11 +59,12 @@ public class HistoryPresenter extends MvpPresenter<HistoryView> {
                 .subscribe(new Action1<DeleteResult>() {
                     @Override
                     public void call(final DeleteResult deleteResult) {
-
+                        getViewState().showSuccess(R.string.status_delete_history_item);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(final Throwable throwable) {
+                        // on error reload all items from database
                         getTranslateHistory();
                     }
                 });
