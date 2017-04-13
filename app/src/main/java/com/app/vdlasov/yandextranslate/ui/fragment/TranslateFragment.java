@@ -140,6 +140,7 @@ public class TranslateFragment extends MvpFragment implements TranslateView, Vie
                     && savedInstanceState.containsKey(SAVE_INSTANT_STATE_LANG_TO)) {
                 translateFromLang = savedInstanceState.getString(SAVE_INSTANT_STATE_LANG_FROM);
                 translateToLang = savedInstanceState.getString(SAVE_INSTANT_STATE_LANG_TO);
+                updateLanguages();
             }
         }
         return view;
